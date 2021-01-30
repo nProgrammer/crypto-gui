@@ -4,8 +4,12 @@ import (
 	"crypto/md5"
 	"crypto/sha256"
 	"encoding/hex"
+	"fmt"
 	"github.com/andlabs/ui"
+	"io"
+	"os"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -48,6 +52,14 @@ func main() {
 			text := hex.EncodeToString(cryptedH[:])
 			crypted.SetText("Encrypted: " + text)
 			encryptedS = text
+		})
+		buttonSave.OnClicked(func(b *ui.Button) {
+			date := time.Now().String()
+			fileName := "./crypted/crypted-" + strings.TrimSpace(date) + ".txt"
+			file, _ := os.Create(fileName)
+			defer file.Close()
+			ln, _ := io.WriteString(file, encryptedS)
+			fmt.Println(ln)
 		})
 		window.OnClosing(func(*ui.Window) bool {
 			ui.Quit()
