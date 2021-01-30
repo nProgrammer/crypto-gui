@@ -1,6 +1,6 @@
-#Crypto GUI
+# Crypto GUI
 
-###HOW TO INSTALL?
+### HOW TO INSTALL?
 To install crypto-gui you only need 4 commands:
 
 ``
