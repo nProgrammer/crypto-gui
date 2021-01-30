@@ -7,19 +7,19 @@ import (
 func main() {
 	err := ui.Main(func() {
 		input := ui.NewEntry()
-		button := ui.NewButton("Greet")
-		greeting := ui.NewLabel("")
+		buttonSHA256 := ui.NewButton("Encrypt to SHA256")
+		buttonMD5 := ui.NewButton("Encrypt to MD5")
+		crypted := ui.NewLabel("")
 		box := ui.NewVerticalBox()
-		box.Append(ui.NewLabel("Enter your name:"), false)
+		box.Append(ui.NewLabel("Enter a string to encrypt:"), false)
 		box.Append(input, false)
-		box.Append(button, false)
-		box.Append(greeting, false)
-		window := ui.NewWindow("Hello", 200, 100, false)
+		box.Append(buttonSHA256, false)
+		box.Append(buttonMD5, false)
+		box.Append(crypted, false)
+		window := ui.NewWindow("Hello", 800, 600, false)
 		window.SetMargined(true)
 		window.SetChild(box)
-		button.OnClicked(func(*ui.Button) {
-			greeting.SetText("Hello, " + input.Text() + "!")
-		})
+
 		window.OnClosing(func(*ui.Window) bool {
 			ui.Quit()
 			return true
