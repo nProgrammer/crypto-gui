@@ -1,15 +1,8 @@
 package main
 
 import (
-	"crypto/md5"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
+	"crypto-client/controllers"
 	"github.com/andlabs/ui"
-	"io"
-	"os"
-	"strings"
-	"time"
 )
 
 func main() {
@@ -37,29 +30,18 @@ func main() {
 		window.SetChild(box)
 		buttonSHA256.OnClicked(func(b *ui.Button) {
 			str := input.Text()
-			str = strings.TrimSpace(str)
-			textToHash := []byte(str)
-			cryptedH := sha256.Sum256(textToHash)
-			text := hex.EncodeToString(cryptedH[:])
+			text := controllers.SHA256(str)
 			crypted.SetText("Encrypted: " + text)
 			encryptedS = text
 		})
 		buttonMD5.OnClicked(func(b *ui.Button) {
 			str := input.Text()
-			str = strings.TrimSpace(str)
-			textToHash := []byte(str)
-			cryptedH := md5.Sum(textToHash)
-			text := hex.EncodeToString(cryptedH[:])
+			text := controllers.MD5(str)
 			crypted.SetText("Encrypted: " + text)
 			encryptedS = text
 		})
 		buttonSave.OnClicked(func(b *ui.Button) {
-			date := time.Now().String()
-			fileName := "./crypted/crypted-" + strings.TrimSpace(date) + ".txt"
-			file, _ := os.Create(fileName)
-			defer file.Close()
-			ln, _ := io.WriteString(file, encryptedS)
-			fmt.Println(ln)
+			controllers.Save(encryptedS)
 		})
 		window.OnClosing(func(*ui.Window) bool {
 			ui.Quit()
